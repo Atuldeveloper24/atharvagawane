@@ -1,0 +1,24 @@
+name: Scrape Tables
+
+on: [push]
+
+jobs:
+  scrape:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install 23f2003721@ds.study.iitm.ac.in dependencies
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - run: npm ci
+      
+      - name: Install Playwright browsers for 23f2003721@ds.study.iitm.ac.in
+        run: npx playwright install --with-deps
+        
+      - name: Run scraper for 23f2003721@ds.study.iitm.ac.in
+        run: npm run scrape
